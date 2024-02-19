@@ -26,7 +26,7 @@ class CustomerController(
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody customer: PostCustomerRequest) {
-        customerService.create(customer.toCustomerModel())
+        customerService.createCustomer(customer.toCustomerModel())
     }
 
     @PutMapping("/{id}")
