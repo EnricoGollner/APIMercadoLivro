@@ -1,6 +1,5 @@
 package dev.enricogollner.mercadolivro.services
 
-import dev.enricogollner.mercadolivro.controllers.request.PutCustomerRequest
 import dev.enricogollner.mercadolivro.models.CustomerModel
 import dev.enricogollner.mercadolivro.respositories.CustomerRepository
 import org.springframework.stereotype.Service
@@ -16,7 +15,7 @@ class CustomerService(val customerRepository: CustomerRepository) {
         return customerRepository.findAll().toList()
     }
 
-    fun getCustomer(id: Int): CustomerModel {
+    fun getCustomerById(id: Int): CustomerModel {
         return customerRepository.findById(id).get()
     }
 
