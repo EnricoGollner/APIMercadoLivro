@@ -14,7 +14,7 @@ class CustomerController(
     val customerService: CustomerService
 ) {
     @GetMapping
-    fun getAll(@RequestParam name: String?): List<CustomerModel> {
+    fun getAllCustomers(@RequestParam name: String?): List<CustomerModel> {
         return customerService.getAll(name)
     }
 
