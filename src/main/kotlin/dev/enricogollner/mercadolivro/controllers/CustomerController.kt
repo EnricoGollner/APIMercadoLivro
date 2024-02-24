@@ -2,6 +2,7 @@ package dev.enricogollner.mercadolivro.controllers
 
 import dev.enricogollner.mercadolivro.controllers.request.PostCustomerRequest
 import dev.enricogollner.mercadolivro.controllers.request.PutCustomerRequest
+import dev.enricogollner.mercadolivro.enums.CustomerStatus
 import dev.enricogollner.mercadolivro.extension.toCustomerModel
 import dev.enricogollner.mercadolivro.models.CustomerModel
 import dev.enricogollner.mercadolivro.services.CustomerService
@@ -32,7 +33,8 @@ class CustomerController(
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun updateCustomer(@PathVariable id: Int, @RequestBody customer: PutCustomerRequest) {
-        customerService.updateCustomer(customer.toCustomerModel(id))
+        val customerSaved = customerService.getCustomerById(id)
+        customerService.updateCustomer(customer.toCustomerModel(customerSaved))
     }
 
     @DeleteMapping("/{id}")

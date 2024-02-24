@@ -14,10 +14,25 @@ data class BookModel(
     var name: String,
     @Column
     var price: BigDecimal,  // Good to work with money values
-    @Column
-    @Enumerated(EnumType.STRING)
-    var status: BookStatus? = null,
+
     @ManyToOne  // Many books to one user - Relationship
     @JoinColumn(name = "customer_id") // as in migration V2 - We're saying that customer_id references id property/primary key of customer
     var customer: CustomerModel? = null
-)
+) {
+    @Column
+    @Enumerated(EnumType.STRING)
+    var status: BookStatus? = null
+        set(newValue) {
+            // field is the old value
+            if (field == BookStatus.CANCELADO || field == BookStatus.DELETADO)
+                throw Exception("Não é possível alterar um livro com status $field")
+
+            field = newValue
+        }
+
+
+    constructor(id: Int? = null, name: String, price: BigDecimal, customer: CustomerModel? = null, status: BookStatus?)
+    : this(id, name, price, customer) {
+        this.status = status
+    }
+}
