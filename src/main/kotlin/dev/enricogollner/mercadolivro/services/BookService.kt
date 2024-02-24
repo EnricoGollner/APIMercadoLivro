@@ -2,6 +2,7 @@ package dev.enricogollner.mercadolivro.services
 
 import dev.enricogollner.mercadolivro.enums.BookStatus
 import dev.enricogollner.mercadolivro.models.BookModel
+import dev.enricogollner.mercadolivro.models.CustomerModel
 import dev.enricogollner.mercadolivro.respositories.BookRepository
 import org.springframework.data.repository.CrudRepository
 import org.springframework.http.HttpStatus
@@ -30,6 +31,15 @@ class BookService(val bookRepository: BookRepository) {
 
     fun updateBook(book: BookModel) {
         bookRepository.save(book)
+    }
+
+    fun deleteByCustomer(customer: CustomerModel) {
+        val books = bookRepository.findByCustomer(customer)
+
+        for (book in books) {
+            book.status = BookStatus.DELETADO
+        }
+        bookRepository.saveAll(books)
     }
 
 }

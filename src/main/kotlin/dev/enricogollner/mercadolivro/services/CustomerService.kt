@@ -5,7 +5,9 @@ import dev.enricogollner.mercadolivro.respositories.CustomerRepository
 import org.springframework.stereotype.Service
 
 @Service
-class CustomerService(val customerRepository: CustomerRepository) {
+class CustomerService(
+    val customerRepository: CustomerRepository,
+    val bookService: BookService) {
 
     fun getAll(name: String?): List<CustomerModel> {
         name?.let {
@@ -32,10 +34,9 @@ class CustomerService(val customerRepository: CustomerRepository) {
     }
 
     fun deleteCustomer(id: Int) {
-        if (!customerRepository.existsById(id)) {
-            throw Exception()
-        }
+        val customer = getCustomerById(id)
 
+        bookService.deleteByCustomer(customer)
         customerRepository.deleteById(id)
     }
 }
