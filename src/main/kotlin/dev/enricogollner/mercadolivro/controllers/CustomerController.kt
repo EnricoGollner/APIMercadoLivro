@@ -2,9 +2,10 @@ package dev.enricogollner.mercadolivro.controllers
 
 import dev.enricogollner.mercadolivro.controllers.request.PostCustomerRequest
 import dev.enricogollner.mercadolivro.controllers.request.PutCustomerRequest
+import dev.enricogollner.mercadolivro.controllers.response.CustomerResponse
 import dev.enricogollner.mercadolivro.enums.CustomerStatus
 import dev.enricogollner.mercadolivro.extension.toCustomerModel
-import dev.enricogollner.mercadolivro.models.CustomerModel
+import dev.enricogollner.mercadolivro.extension.toResponse
 import dev.enricogollner.mercadolivro.services.CustomerService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -15,13 +16,13 @@ class CustomerController(
     val customerService: CustomerService
 ) {
     @GetMapping
-    fun getAllCustomers(@RequestParam name: String?): List<CustomerModel> {
-        return customerService.getAll(name)
+    fun getAllCustomers(@RequestParam name: String?): List<CustomerResponse> {
+        return customerService.getAll(name).map { it.toResponse() }
     }
 
     @GetMapping("/{id}")
-    fun getCustomer(@PathVariable id: Int): CustomerModel {
-        return customerService.getCustomerById(id)
+    fun getCustomer(@PathVariable id: Int): CustomerResponse {
+        return customerService.getCustomerById(id).toResponse()
     }
 
     @PostMapping

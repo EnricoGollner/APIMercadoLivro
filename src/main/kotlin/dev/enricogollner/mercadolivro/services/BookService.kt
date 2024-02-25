@@ -4,21 +4,20 @@ import dev.enricogollner.mercadolivro.enums.BookStatus
 import dev.enricogollner.mercadolivro.models.BookModel
 import dev.enricogollner.mercadolivro.models.CustomerModel
 import dev.enricogollner.mercadolivro.respositories.BookRepository
-import org.springframework.data.repository.CrudRepository
-import org.springframework.http.HttpStatus
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
-import org.springframework.web.bind.annotation.ResponseStatus
 
 @Service
 class BookService(val bookRepository: BookRepository) {
-    fun getAllBooks(): List<BookModel> =
-        bookRepository.findAll().toList()
+    fun getAllBooks(pageable: Pageable): Page<BookModel> =
+        bookRepository.findAll(pageable)
 
     fun createBook(book: BookModel) =
         bookRepository.save(book)
 
-    fun getActiveBooks(): List<BookModel> =
-        bookRepository.findByStatus(BookStatus.ATIVO)
+    fun getActiveBooks(pageable: Pageable): Page<BookModel> =
+        bookRepository.findByStatus(BookStatus.ATIVO, pageable)
 
     fun getBookById(id: Int): BookModel =
         bookRepository.findById(id).orElseThrow()

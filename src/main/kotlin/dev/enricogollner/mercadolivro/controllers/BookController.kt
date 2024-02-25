@@ -2,13 +2,16 @@ package dev.enricogollner.mercadolivro.controllers
 
 import dev.enricogollner.mercadolivro.controllers.request.PostBookRequest
 import dev.enricogollner.mercadolivro.controllers.request.PutBookRequest
+import dev.enricogollner.mercadolivro.controllers.response.BookResponse
 import dev.enricogollner.mercadolivro.extension.toBookModel
-import dev.enricogollner.mercadolivro.models.BookModel
+import dev.enricogollner.mercadolivro.extension.toResponse
 import dev.enricogollner.mercadolivro.services.BookService
 import dev.enricogollner.mercadolivro.services.CustomerService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import java.awt.print.Book
 
 @RestController
 @RequestMapping("book")
@@ -17,16 +20,16 @@ class BookController(
     val customerService: CustomerService
 ) {
     @GetMapping
-    fun getAllBooks(@RequestParam name: String?): List<BookModel> =
-        bookService.getAllBooks()
+    fun getAllBooks(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<BookResponse> =
+        bookService.getAllBooks(pageable).map { it.toResponse() }
 
     @GetMapping("/active")
-    fun getActiveBooks(): List<BookModel> =
-        bookService.getActiveBooks()
+    fun getActiveBooks(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<BookResponse> =
+        bookService.getActiveBooks(pageable).map { it.toResponse() }
 
     @GetMapping("/{id}")
-    fun getBookById(@PathVariable id: Int): BookModel =
-        bookService.getBookById(id)
+    fun getBookById(@PathVariable id: Int): BookResponse =
+        bookService.getBookById(id).toResponse()
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
