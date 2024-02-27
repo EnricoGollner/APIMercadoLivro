@@ -20,7 +20,7 @@ class BookService(val bookRepository: BookRepository) {
         bookRepository.findByStatus(BookStatus.ATIVO, pageable)
 
     fun getBookById(id: Int): BookModel =
-        bookRepository.findById(id).orElseThrow()
+        bookRepository.findById(id).orElseThrow { Exception("Este recurso não existe!") }
 
     fun deleteBook(id: Int) {  // Only disactive the book
         val book = getBookById(id)

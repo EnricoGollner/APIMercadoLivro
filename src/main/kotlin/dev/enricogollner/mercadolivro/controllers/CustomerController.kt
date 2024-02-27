@@ -7,6 +7,7 @@ import dev.enricogollner.mercadolivro.enums.CustomerStatus
 import dev.enricogollner.mercadolivro.extension.toCustomerModel
 import dev.enricogollner.mercadolivro.extension.toResponse
 import dev.enricogollner.mercadolivro.services.CustomerService
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
@@ -27,7 +28,7 @@ class CustomerController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody customer: PostCustomerRequest) {
+    fun create(@RequestBody @Valid customer: PostCustomerRequest) {
         customerService.createCustomer(customer.toCustomerModel())
     }
 
