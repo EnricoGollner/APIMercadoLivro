@@ -1,6 +1,7 @@
 package dev.enricogollner.mercadolivro.services
 
 import dev.enricogollner.mercadolivro.enums.CustomerStatus
+import dev.enricogollner.mercadolivro.enums.Errors
 import dev.enricogollner.mercadolivro.exceptions.NotFoundException
 import dev.enricogollner.mercadolivro.models.CustomerModel
 import dev.enricogollner.mercadolivro.respositories.CustomerRepository
@@ -20,7 +21,7 @@ class CustomerService(
     }
 
     fun getCustomerById(id: Int): CustomerModel {
-        return customerRepository.findById(id).orElseThrow { NotFoundException("Customer [$id] don't exist!", "ML-0002") }
+        return customerRepository.findById(id).orElseThrow { NotFoundException(Errors.ML201.message.format(id), Errors.ML201.code) }
     }
 
     fun createCustomer(customer: CustomerModel) {

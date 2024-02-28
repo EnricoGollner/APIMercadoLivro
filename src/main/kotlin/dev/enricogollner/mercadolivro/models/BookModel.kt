@@ -1,8 +1,9 @@
 package dev.enricogollner.mercadolivro.models
 
 import dev.enricogollner.mercadolivro.enums.BookStatus
+import dev.enricogollner.mercadolivro.enums.Errors
+import dev.enricogollner.mercadolivro.exceptions.BadRequestException
 import jakarta.persistence.*
-import java.awt.print.Book
 import java.math.BigDecimal
 
 @Entity(name = "book")
@@ -25,7 +26,7 @@ data class BookModel(
         set(newValue) {
             // field is the old value
             if (field == BookStatus.CANCELADO || field == BookStatus.DELETADO)
-                throw Exception("Não é possível alterar um livro com status $field")
+                throw  BadRequestException(Errors.ML102.message.format(field), Errors.ML102.code)
 
             field = newValue
         }
