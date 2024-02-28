@@ -1,6 +1,7 @@
 package dev.enricogollner.mercadolivro.services
 
 import dev.enricogollner.mercadolivro.enums.BookStatus
+import dev.enricogollner.mercadolivro.exceptions.NotFoundException
 import dev.enricogollner.mercadolivro.models.BookModel
 import dev.enricogollner.mercadolivro.models.CustomerModel
 import dev.enricogollner.mercadolivro.respositories.BookRepository
@@ -20,9 +21,9 @@ class BookService(val bookRepository: BookRepository) {
         bookRepository.findByStatus(BookStatus.ATIVO, pageable)
 
     fun getBookById(id: Int): BookModel =
-        bookRepository.findById(id).orElseThrow { Exception("Este recurso não existe!") }
+        bookRepository.findById(id).orElseThrow { NotFoundException("Book [$id] don't exist.", "ML-0001") }
 
-    fun deleteBook(id: Int) {  // Only disactive the book
+    fun deleteBook(id: Int) {  // Only disable the book
         val book = getBookById(id)
         book.status = BookStatus.CANCELADO
         updateBook(book)
