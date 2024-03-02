@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotEmpty
 
 // DTO
 data class PostCustomerRequest(
-    @field:NotEmpty var name: String,
-    @field:Email var email: String,
-    )
+    @field: NotEmpty(message = "Name must be informed!")
+    var name: String,
+    @field:Email(message = "E-mail must be valid!")
+    var email: String
+)
