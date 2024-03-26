@@ -43,4 +43,9 @@ class CustomerService(
         customer.status = CustomerStatus.INATIVO
         customerRepository.save(customer)
     }
+
+    // Verifies if there's no account created with the e-mail
+    fun emailAvaliable(email: String): Boolean {
+        return !customerRepository.existsByEmail(email)
+    }
 }
