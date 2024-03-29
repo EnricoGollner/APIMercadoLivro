@@ -5,7 +5,7 @@ import dev.enricogollner.mercadolivro.enums.Errors
 import dev.enricogollner.mercadolivro.exceptions.NotFoundException
 import dev.enricogollner.mercadolivro.models.BookModel
 import dev.enricogollner.mercadolivro.models.CustomerModel
-import dev.enricogollner.mercadolivro.respositories.BookRepository
+import dev.enricogollner.mercadolivro.repositories.BookRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
