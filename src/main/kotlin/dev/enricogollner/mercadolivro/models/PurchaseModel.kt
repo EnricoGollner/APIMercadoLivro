@@ -28,7 +28,7 @@ data class PurchaseModel(
                 joinColumns = [JoinColumn(name = "purchase_id")],
                 inverseJoinColumns = [JoinColumn(name = "book_id")]
                 )  // We'll have an intermediate table to put together the purchase and books
-        val books: List<BookModel>,
+        val books: MutableList<BookModel>,
 
         @Column
         val nfe: String? = null,
