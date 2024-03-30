@@ -11,8 +11,5 @@ data class PostPurchaseRequest (
         val customerId: Int,
         @field:NotNull
         @JsonAlias("book_ids")
-        val bookIds: Set<Int>,
-
-) {
-
-}
+        val bookIds: Set<Int>
+)

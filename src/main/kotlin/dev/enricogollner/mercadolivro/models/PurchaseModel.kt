@@ -24,10 +24,11 @@ data class PurchaseModel(
         val customer: CustomerModel,
 
         @ManyToMany  // many purchases to many books
-        @JoinTable(name = "purchase_book",
+        @JoinTable(  // We'll have an intermediate table to put together the purchase and books
+                name = "purchase_book",
                 joinColumns = [JoinColumn(name = "purchase_id")],
                 inverseJoinColumns = [JoinColumn(name = "book_id")]
-                )  // We'll have an intermediate table to put together the purchase and books
+        )
         val books: MutableList<BookModel>,
 
         @Column
