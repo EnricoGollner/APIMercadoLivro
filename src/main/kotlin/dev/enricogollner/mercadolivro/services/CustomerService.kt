@@ -2,6 +2,7 @@ package dev.enricogollner.mercadolivro.services
 
 import dev.enricogollner.mercadolivro.enums.CustomerStatus
 import dev.enricogollner.mercadolivro.enums.Errors
+import dev.enricogollner.mercadolivro.enums.Profile
 import dev.enricogollner.mercadolivro.exceptions.NotFoundException
 import dev.enricogollner.mercadolivro.models.CustomerModel
 import dev.enricogollner.mercadolivro.repositories.CustomerRepository
@@ -25,7 +26,10 @@ class CustomerService(
     }
 
     fun createCustomer(customer: CustomerModel) {
-        customerRepository.save(customer)
+        val customerCopy = customer.copy(
+            roles = setOf(Profile.CUSTOMER),
+        )
+        customerRepository.save(customerCopy)
     }
 
     fun updateCustomer(customer: CustomerModel) {

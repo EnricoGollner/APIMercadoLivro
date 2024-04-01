@@ -1,13 +1,8 @@
 package dev.enricogollner.mercadolivro.models
 
 import dev.enricogollner.mercadolivro.enums.CustomerStatus
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import dev.enricogollner.mercadolivro.enums.Profile
+import jakarta.persistence.*
 
 @Entity(name = "customer")
 data class CustomerModel(
@@ -24,5 +19,17 @@ data class CustomerModel(
     var status: CustomerStatus,
 
     @Column
-    val password: String
+    val password: String,
+
+    @Column(name = "role")
+    @CollectionTable( //Tabela que não tem ID se torna uma collection table
+        name = "customer_roles",
+        joinColumns = [JoinColumn(name="customer_id")]
+    )
+    @ElementCollection(
+        targetClass = Profile::class,
+        fetch = FetchType.EAGER  // Toda vez que formos buscar um customer, também queremos estas roles
+    )
+    @Enumerated(EnumType.STRING)
+    val roles: Set<Profile> = setOf()
 )
