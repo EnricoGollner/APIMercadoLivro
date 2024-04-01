@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("book")
 class BookController(
-    val bookService: BookService,
-    val customerService: CustomerService
+    private val bookService: BookService,
+    private val customerService: CustomerService
 ) {
     @GetMapping
     fun getAllBooks(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<BookResponse> =
