@@ -6,12 +6,11 @@ import jakarta.validation.ConstraintValidatorContext
 import jakarta.validation.Payload
 import kotlin.reflect.KClass
 
-class EmailAvaliableValidator(var customerService: CustomerService): ConstraintValidator<EmailAvaliable, String> {
+class EmailAvaliableValidator(private val customerService: CustomerService): ConstraintValidator<EmailAvaliable, String> {
         override fun isValid(value: String?, p1: ConstraintValidatorContext?): Boolean {
                 if (value.isNullOrEmpty()) {
                         return false
                 }
-                return customerService.emailAvaliable(value)
+                return customerService.isEmailAvaliable(value)
         }
-
 }

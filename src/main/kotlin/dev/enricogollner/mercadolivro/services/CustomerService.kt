@@ -53,7 +53,7 @@ class CustomerService(
     }
 
     // Verifies if there's no account created with the e-mail
-    fun emailAvaliable(email: String): Boolean {
+    fun isEmailAvaliable(email: String): Boolean {
         return !customerRepository.existsByEmail(email)
     }
 }

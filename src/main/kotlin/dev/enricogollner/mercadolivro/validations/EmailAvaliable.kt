@@ -10,4 +10,5 @@ import kotlin.reflect.KClass
 annotation class EmailAvaliable(
         val message: String = "E-mail já cadastrado!",
         val groups: Array<KClass<*>> = [],
-        val payload: Array<KClass<out Payload>> = [])
+        val payload: Array<KClass<out Payload>> = []
+)
