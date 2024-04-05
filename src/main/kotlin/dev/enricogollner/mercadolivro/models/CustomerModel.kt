@@ -1,7 +1,7 @@
 package dev.enricogollner.mercadolivro.models
 
 import dev.enricogollner.mercadolivro.enums.CustomerStatus
-import dev.enricogollner.mercadolivro.enums.Profile
+import dev.enricogollner.mercadolivro.enums.Role
 import jakarta.persistence.*
 
 @Entity(name = "customer")
@@ -27,9 +27,9 @@ data class CustomerModel(
         joinColumns = [JoinColumn(name="customer_id")]
     )
     @ElementCollection(
-        targetClass = Profile::class,
+        targetClass = Role::class,
         fetch = FetchType.EAGER  // Toda vez que formos buscar um customer, também queremos estas roles
     )
     @Enumerated(EnumType.STRING)
-    val roles: Set<Profile> = setOf()
+    val roles: Set<Role> = setOf()
 )
