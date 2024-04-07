@@ -2,6 +2,7 @@ package dev.enricogollner.mercadolivro.config
 
 import dev.enricogollner.mercadolivro.repositories.CustomerRepository
 import dev.enricogollner.mercadolivro.security.AuthenticationFilter
+import dev.enricogollner.mercadolivro.security.JWTUtil
 import dev.enricogollner.mercadolivro.security.UserCustomDetails
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -23,7 +24,8 @@ import org.springframework.security.web.SecurityFilterChain
 class SecurityConfig(
     private val customerRepository: CustomerRepository,
     private val authenticationConfiguration: AuthenticationConfiguration,
-    private val userDetailsService: UserDetailsService
+    private val userDetailsService: UserDetailsService,
+    private val jwtUtil: JWTUtil
 ) {
     private val PUBLIC_POST_MATCHERS = arrayOf<String>(
         "/customers"
@@ -38,7 +40,7 @@ class SecurityConfig(
         http.authorizeHttpRequests { auth ->
             auth.requestMatchers(HttpMethod.POST, *PUBLIC_POST_MATCHERS).permitAll().anyRequest().authenticated()
         }
-        http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository))
+        http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository, jwtUtil))
 
         return http.build()
     }

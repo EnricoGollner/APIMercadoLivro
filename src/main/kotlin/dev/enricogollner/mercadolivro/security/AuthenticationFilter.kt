@@ -14,7 +14,8 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 class AuthenticationFilter(authenticationManager: AuthenticationManager,
-    private val customerRepository: CustomerRepository
+    private val customerRepository: CustomerRepository,
+    private val jwtUtil: JWTUtil
     ): UsernamePasswordAuthenticationFilter(authenticationManager) {
     override fun attemptAuthentication(request: HttpServletRequest, response: HttpServletResponse): Authentication {
         try {
@@ -34,6 +35,7 @@ class AuthenticationFilter(authenticationManager: AuthenticationManager,
         authResult: Authentication
     ) {
         val id = (authResult.principal as UserCustomDetails).id
-        response.addHeader("Authorization", "1234")
+        val token = jwtUtil.generateToken(id)
+        response.addHeader("Authorization", "Bearer $token")
     }
 }
